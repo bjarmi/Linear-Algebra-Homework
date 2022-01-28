@@ -1,4 +1,4 @@
-# Linear-Algebra-Homework
+# Linear Algebra Homework
 
 This repository holds all the programming homework in T-201-LINC at Reykjavík University.
 
