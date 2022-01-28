@@ -60,7 +60,6 @@ def scale_vecs(vecdict):
 # 3: (Problem 3.8.3) Constructing a Span over GF(2)
 def GF2_span(D, L):
     """
-    >>> from GF2 import one
     >>> D = {'a', 'b', 'c'}
     >>> result = GF2_span(
     >>>     D, [Vec(D, {'a': one, 'c': one}), Vec(D, {'c': one})]
