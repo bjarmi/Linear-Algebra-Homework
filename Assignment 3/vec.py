@@ -1,6 +1,6 @@
 # Copyright 2013 Philip N. Klein
 
-def getitem(v,k):
+def getitem(v, k):
     """
     Return the value of entry k in v.
     Be sure getitem(v,k) returns 0 if k is not represented in v.f.
@@ -14,7 +14,8 @@ def getitem(v,k):
     assert k in v.D
     pass
 
-def setitem(v,k,val):
+
+def setitem(v, k, val):
     """
     Set the element of v with label d to be val.
     setitem(v,d,val) should set the value for key d even if d
@@ -34,7 +35,8 @@ def setitem(v,k,val):
     assert k in v.D
     pass
 
-def equal(u,v):
+
+def equal(u, v):
     """
     Return true iff u is equal to v.
     Because of sparse representation, it is not enough to compare dictionaries
@@ -49,14 +51,16 @@ def equal(u,v):
     >>> Vec({'a', 'b', 'c'}, {}) == Vec({'a', 'b', 'c'}, {'a': 0})
     True
 
-    Be sure that equal(u, v) checks equalities for all keys from u.f and v.f even if
-    some keys in u.f do not exist in v.f (or vice versa)
+    Be sure that equal(u, v) checks equalities for all keys from u.f and v.f
+    even if some keys in u.f do not exist in v.f (or vice versa)
 
     >>> Vec({'x','y','z'},{'y':1,'x':2}) == Vec({'x','y','z'},{'y':1,'z':0})
     False
-    >>> Vec({'a','b','c'}, {'a':0,'c':1}) == Vec({'a','b','c'}, {'a':0,'c':1,'b':4})
+    >>> Vec({'a','b','c'}, {'a':0,'c':1}) == Vec(
+    >>>                                     {'a','b','c'}, {'a':0,'c':1,'b':4})
     False
-    >>> Vec({'a','b','c'}, {'a':0,'c':1,'b':4}) == Vec({'a','b','c'}, {'a':0,'c':1})
+    >>> Vec({'a','b','c'}, {'a':0,'c':1,'b':4}) == Vec(
+    >>>                                           {'a','b','c'}, {'a':0,'c':1})
     False
 
     The keys matter:
@@ -70,7 +74,8 @@ def equal(u,v):
     assert u.D == v.D
     pass
 
-def add(u,v):
+
+def add(u, v):
     """
     Returns the sum of the two vectors.
     
@@ -80,8 +85,8 @@ def add(u,v):
     Do not seek to create more sparsity than exists in the two input vectors.
     Doing so will unnecessarily complicate your code and will hurt performance.
 
-    Make sure to add together values for all keys from u.f and v.f even if some keys in u.f do not
-    exist in v.f (or vice versa)
+    Make sure to add together values for all keys from u.f and v.f even if some
+    keys in u.f do not exist in v.f (or vice versa)
 
     >>> a = Vec({'a','e','i','o','u'}, {'a':0,'e':1,'i':2})
     >>> b = Vec({'a','e','i','o','u'}, {'o':4,'u':7})
@@ -107,7 +112,8 @@ def add(u,v):
     assert u.D == v.D
     pass
 
-def dot(u,v):
+
+def dot(u, v):
     """
     Returns the dot product of the two vectors.
 
@@ -141,6 +147,7 @@ def dot(u,v):
     assert u.D == v.D
     pass
 
+
 def scalar_mul(v, alpha):
     """
     Returns the scalar-vector product alpha times v.
@@ -161,6 +168,7 @@ def scalar_mul(v, alpha):
     """
     pass
 
+
 def neg(v):
     """
     Returns the negation of a vector.
@@ -178,7 +186,6 @@ def neg(v):
     """
     pass
 
-###############################################################################################################################
 
 class Vec:
     """
@@ -187,6 +194,7 @@ class Vec:
     f - a dictionary mapping (some) domain elements to field elements
         elements of D not appearing in f are implicitly mapped to zero
     """
+
     def __init__(self, labels, function):
         assert isinstance(labels, set)
         assert isinstance(function, dict)
@@ -196,28 +204,29 @@ class Vec:
     __getitem__ = getitem
     __setitem__ = setitem
     __neg__ = neg
-    __rmul__ = scalar_mul #if left arg of * is primitive, assume it's a scalar
+    __rmul__ = scalar_mul  # if left arg of * is primitive, assume scalar
 
-    def __mul__(self,other):
-        #If other is a vector, returns the dot product of self and other
+    def __mul__(self, other):
+        # If other is a vector, returns the dot product of self and other
         if isinstance(other, Vec):
-            return dot(self,other)
+            return dot(self, other)
         else:
-            return NotImplemented  #  Will cause other.__rmul__(self) to be invoked
+            # Will cause other.__rmul__(self) to be invoked
+            return NotImplemented
 
-    def __truediv__(self,other):  # Scalar division
-        return (1/other)*self
+    def __truediv__(self, other):  # Scalar division
+        return (1 / other) * self
 
     __add__ = add
 
     def __radd__(self, other):
-        "Hack to allow sum(...) to work with vectors"
+        # Hack to allow sum(...) to work with vectors"
         if other == 0:
             return self
 
-    def __sub__(a,b):
-        "Returns a vector which is the difference of a and b."
-        return a+(-b)
+    def __sub__(a, b):
+        # Returns a vector which is the difference of a and b.
+        return a + (-b)
 
     __eq__ = equal
 
@@ -225,26 +234,35 @@ class Vec:
         s = 0
         for x in self.f.values():
             if isinstance(x, int) or isinstance(x, float):
-                s += x*x
+                s += x * x
             elif isinstance(x, complex):
                 y = abs(x)
-                s += y*y
-            else: return False
+                s += y * y
+            else:
+                return False
         return s < 1e-20
 
     def __str__(v):
         "pretty-printing"
         D_list = sorted(v.D, key=repr)
         numdec = 3
-        wd = dict([(k,(1+max(len(str(k)), len('{0:.{1}G}'.format(v[k], numdec))))) if isinstance(v[k], int) or isinstance(v[k], float) else (k,(1+max(len(str(k)), len(str(v[k]))))) for k in D_list])
-        s1 = ''.join(['{0:>{1}}'.format(str(k),wd[k]) for k in D_list])
-        s2 = ''.join(['{0:>{1}.{2}G}'.format(v[k],wd[k],numdec) if isinstance(v[k], int) or isinstance(v[k], float) else '{0:>{1}}'.format(v[k], wd[k]) for k in D_list])
-        return "\n" + s1 + "\n" + '-'*sum(wd.values()) +"\n" + s2
+        wd = dict(
+            [(k, (1 + max(len(str(k)), len('{0:.{1}G}'.format(v[k], numdec)))))
+             if isinstance(v[k], int) or isinstance(v[k], float)
+             else (k, (1 + max(len(str(k)), len(str(v[k]))))) for k in D_list]
+        )
+        s1 = ''.join(['{0:>{1}}'.format(str(k), wd[k]) for k in D_list])
+        s2 = ''.join(
+            ['{0:>{1}.{2}G}'.format(v[k], wd[k], numdec)
+             if isinstance(v[k], int) or isinstance(v[k], float)
+             else '{0:>{1}}'.format(v[k], wd[k]) for k in D_list]
+        )
+        return "\n" + s1 + "\n" + '-' * sum(wd.values()) + "\n" + s2
 
     def __hash__(self):
-        "Here we pretend Vecs are immutable so we can form sets of them"
+        # Here we pretend Vecs are immutable so we can form sets of them
         h = hash(frozenset(self.D))
-        for k,v in sorted(self.f.items(), key = lambda x:repr(x[0])):
+        for k, v in sorted(self.f.items(), key=lambda x: repr(x[0])):
             if v != 0:
                 h = hash((h, hash(v)))
         return h
@@ -258,4 +276,3 @@ class Vec:
 
     def __iter__(self):
         raise TypeError('%r object is not iterable' % self.__class__.__name__)
-
