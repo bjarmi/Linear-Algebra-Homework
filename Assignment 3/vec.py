@@ -11,8 +11,7 @@ def getitem(v, k):
     >>> v['b']
     0
     """
-    assert k in v.D
-    pass
+    return v[k] if k in v.D else 0
 
 
 def setitem(v, k, val):
@@ -271,7 +270,7 @@ class Vec:
         return "Vec(" + str(self.D) + "," + str(self.f) + ")"
 
     def copy(self):
-        "Don't make a new copy of the domain D"
+        # Don't make a new copy of the domain D.
         return Vec(self.D, self.f.copy())
 
     def __iter__(self):
