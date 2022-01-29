@@ -11,7 +11,11 @@ def getitem(v, k):
     >>> v['b']
     0
     """
-    return v[k] if k in v.D else 0
+    assert k in v.D
+    try:
+        return v.f[k]
+    except KeyError:
+        return 0
 
 
 def setitem(v, k, val):
@@ -32,7 +36,7 @@ def setitem(v, k, val):
     0
     """
     assert k in v.D
-    pass
+    v.f[k] = val
 
 
 def equal(u, v):
