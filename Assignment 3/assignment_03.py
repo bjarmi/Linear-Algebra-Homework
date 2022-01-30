@@ -30,7 +30,10 @@ def vec_sum(veclist, D):
     >>> vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11})
     True
     """
-    pass
+    out = Vec(D, {})
+    for vec in veclist:
+        out = out + vec
+    return out
 
 
 def vec_select_sum(veclist, k, D):
@@ -77,3 +80,16 @@ def GF2_span(D, L):
     [True, True, True, True]
     """
     pass
+
+
+def main():
+    D = {'a', 'b', 'c'}
+    v1 = Vec(D, {'a': 1})
+    v2 = Vec(D, {'a': 0, 'b': 1})
+    v3 = Vec(D, {'b': 2})
+    v4 = Vec(D, {'a': 10, 'b': 10})
+    print(vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11}))
+
+
+if __name__ == '__main__':
+    main()
