@@ -82,9 +82,12 @@ def equal(u, v):
     """
     assert (v.D == u.D)
 
-    for key, val in u.f:
-        if key in v.f:
-            if val != v.f[key]:
+    first_func = u.f if len(u.f) >= len(v.f) else v.f
+    second_func = v.f if len(v.f) <= len(u.f) else u.f
+
+    for key, val in first_func.items():
+        if key in second_func:
+            if val != second_func[key]:
                 return False
 
         elif val != 0:
