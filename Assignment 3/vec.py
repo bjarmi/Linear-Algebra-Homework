@@ -118,7 +118,15 @@ def add(u, v):
     True
     """
     assert u.D == v.D
-    pass
+
+    out_func: dict = u.f
+    for key, val in v.f:
+        if key in out_func:
+            out_func[key] += val
+        else:
+            out_func[key] = val
+
+    return out_func
 
 
 def dot(u, v):
