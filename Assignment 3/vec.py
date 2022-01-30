@@ -80,7 +80,17 @@ def equal(u, v):
     >>> Vec({'a','b'},{'a':2})
     False
     """
-    return (v.D == u.D) and (v.f == u.f)
+    assert (v.D == u.D)
+
+    for key, val in u.f:
+        if key in v.f:
+            if val != v.f[key]:
+                return False
+
+        elif val != 0:
+            return False
+
+    return True
 
 
 def add(u, v):
