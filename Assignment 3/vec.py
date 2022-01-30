@@ -226,7 +226,9 @@ def neg(v):
     >>> -Vec({'a','b','c'}, {'a':1}) == Vec({'a','b','c'}, {'a':-1})
     True
     """
-    pass
+    for key, val in v.f.items():
+        v.f[key] = -val
+    return v
 
 
 class Vec:
