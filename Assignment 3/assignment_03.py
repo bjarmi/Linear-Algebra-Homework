@@ -46,7 +46,7 @@ def vec_select_sum(veclist, k, D):
     >>> vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3})
     True
     """
-    pass
+    return vec_sum(vec_select(veclist, k), D)
 
 
 # 2: (Problem 3.8.2) Vector Dictionary
@@ -88,7 +88,7 @@ def main():
     v2 = Vec(D, {'a': 0, 'b': 1})
     v3 = Vec(D, {'b': 2})
     v4 = Vec(D, {'a': 10, 'b': 10})
-    print(vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11}))
+    print(vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3}))
 
 
 if __name__ == '__main__':
