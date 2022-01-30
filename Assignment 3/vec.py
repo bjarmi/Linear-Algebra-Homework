@@ -201,7 +201,14 @@ def scalar_mul(v, alpha):
     >>> u == Vec({'x','y','z','w'},{'x':1,'y':2,'z':3,'w':4})
     True
     """
-    pass
+    if alpha == 0:
+        v.f.clear()
+        return v
+
+    for key, val in v.f.items():
+        v.f[key] = val * alpha
+
+    return v
 
 
 def neg(v):
