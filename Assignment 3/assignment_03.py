@@ -13,7 +13,11 @@ def vec_select(veclist, k):
     >>> vec_select([v1, v2, v3, v4], 'a') == [Vec(D,{'b': 1}), Vec(D,{'b': 2})]
     True
     """
-    pass
+    sublist = []
+    for vec in veclist:
+        if vec[k] == 0:
+            sublist.append(vec)
+    return sublist
 
 
 def vec_sum(veclist, D):
