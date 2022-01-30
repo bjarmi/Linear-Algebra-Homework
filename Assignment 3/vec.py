@@ -133,13 +133,13 @@ def add(u, v):
     assert u.D == v.D
 
     out_func: dict = u.f
-    for key, val in v.f:
+    for key, val in v.f.items():
         if key in out_func:
             out_func[key] += val
         else:
             out_func[key] = val
 
-    return out_func
+    return Vec(u.D, out_func)
 
 
 def dot(u, v):
