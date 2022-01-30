@@ -41,41 +41,46 @@ def setitem(v, k, val):
 
 def equal(u, v):
     """
-    Return true iff u is equal to v.
+    Return true if u is equal to v.
     Because of sparse representation, it is not enough to compare dictionaries
 
     Consider using brackets notation u[...] and v[...] in your procedure
     to access entries of the input vectors.  This avoids some sparsity bugs.
 
-    >>> Vec({'a', 'b', 'c'}, {'a':0}) == Vec({'a', 'b', 'c'}, {'b':0})
+    >>> Vec({'a', 'b', 'c'}, {'a':0}) ==
+    >>> Vec({'a', 'b', 'c'}, {'b':0})
     True
-    >>> Vec({'a', 'b', 'c'}, {'a': 0}) == Vec({'a', 'b', 'c'}, {})
+    >>> Vec({'a', 'b', 'c'}, {'a': 0}) ==
+    >>> Vec({'a', 'b', 'c'}, {})
     True
-    >>> Vec({'a', 'b', 'c'}, {}) == Vec({'a', 'b', 'c'}, {'a': 0})
+    >>> Vec({'a', 'b', 'c'}, {}) ==
+    >>> Vec({'a', 'b', 'c'}, {'a': 0})
     True
 
     Be sure that equal(u, v) checks equalities for all keys from u.f and v.f
     even if some keys in u.f do not exist in v.f (or vice versa)
 
-    >>> Vec({'x','y','z'},{'y':1,'x':2}) == Vec({'x','y','z'},{'y':1,'z':0})
+    >>> Vec({'x','y','z'},{'y':1,'x':2}) ==
+    >>> Vec({'x','y','z'},{'y':1,'z':0})
     False
-    >>> Vec({'a','b','c'}, {'a':0,'c':1}) == Vec(
-    >>>                                     {'a','b','c'}, {'a':0,'c':1,'b':4})
+    >>> Vec({'a','b','c'}, {'a':0,'c':1}) ==
+    >>> Vec({'a','b','c'}, {'a':0,'c':1,'b':4})
     False
-    >>> Vec({'a','b','c'}, {'a':0,'c':1,'b':4}) == Vec(
-    >>>                                           {'a','b','c'}, {'a':0,'c':1})
+    >>> Vec({'a','b','c'}, {'a':0,'c':1,'b':4}) ==
+    >>> Vec({'a','b','c'}, {'a':0,'c':1})
     False
 
     The keys matter:
-    >>> Vec({'a','b'},{'a':1}) == Vec({'a','b'},{'b':1})
+    >>> Vec({'a','b'},{'a':1}) ==
+    >>> Vec({'a','b'},{'b':1})
     False
 
     The values matter:
-    >>> Vec({'a','b'},{'a':1}) == Vec({'a','b'},{'a':2})
+    >>> Vec({'a','b'},{'a':1}) ==
+    >>> Vec({'a','b'},{'a':2})
     False
     """
-    assert u.D == v.D
-    pass
+    return (v.D == u.D) and (v.f == u.f)
 
 
 def add(u, v):
