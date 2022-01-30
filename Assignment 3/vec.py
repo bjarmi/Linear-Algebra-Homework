@@ -161,7 +161,13 @@ def dot(u, v):
     12
     """
     assert u.D == v.D
-    pass
+
+    mul_values = []
+    for key, val in u.f:
+        if key in v.f:
+            mul_values.append(v.f[key] * val)
+
+    return sum(mul_values)
 
 
 def scalar_mul(v, alpha):
