@@ -61,7 +61,7 @@ def scale_vecs(vecdict):
         >>> for v in result]
     [True, True]
     """
-    pass
+    return [(a / 10) * vec for a, vec in vecdict.items()]
 
 
 # 3: (Problem 3.8.3) Constructing a Span over GF(2)
@@ -80,16 +80,3 @@ def GF2_span(D, L):
     [True, True, True, True]
     """
     pass
-
-
-def main():
-    D = {'a', 'b', 'c'}
-    v1 = Vec(D, {'a': 1})
-    v2 = Vec(D, {'a': 0, 'b': 1})
-    v3 = Vec(D, {'b': 2})
-    v4 = Vec(D, {'a': 10, 'b': 10})
-    print(vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3}))
-
-
-if __name__ == '__main__':
-    main()
